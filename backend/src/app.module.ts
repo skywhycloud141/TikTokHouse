@@ -4,6 +4,7 @@ import { TelegrafModule } from 'nestjs-telegraf';
 import { PrismaModule } from './prisma/prisma.module';
 import { BotModule } from './bot/bot.module';
 import { UserModule } from './user/user.module';
+import { LinkValidatorModule } from './link-validator/link-validator.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module';
     }),
     BotModule,
     UserModule,
+    LinkValidatorModule,
   ],
 })
 export class AppModule {}
