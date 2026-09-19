@@ -2,12 +2,15 @@ import { Update, Start, Ctx, On } from 'nestjs-telegraf';
 import { Context } from 'telegraf';
 import { UserService } from '../user/user.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { LinkValidatorService } from '../link-validator/link-validator.service';
+import { Platform } from '@prisma/client';
 
 @Update() // Делает этот класс слушателем событий Telegram
 export class BotUpdate {
   constructor(
     private readonly userService: UserService,
     private readonly prisma: PrismaService,
+    private readonly linkvalidator: LinkValidatorService,
   ) {}
 
   // Реакция на команду /start
@@ -34,13 +37,21 @@ export class BotUpdate {
     }
     if (!('text' in ctx.message)) return;
     const text = ctx.message.text.trim();
+    
 
     // Базовая валидация: проверяем, что это хотя бы похоже на ссылку
     try {
-        new URL(text)
+        new URL(text);
+        
     } catch (error) {
         await ctx.reply('Пожалуйста, отправь корректную ссылку 🔗');
         return;
+    }
+    
+    const platform = this.linkvalidator.identifyPlatform(text);
+    if (platform === Platform.UNKNOWN) {
+      await ctx.reply('Извини, я пока не умею скачивать с этого сайта. Поддерживаются: TikTok, Reddit, Instagram.')
+      return;
     }
 
     // Достаем юзера, чтобы привязать историю запроса к нему
@@ -51,6 +62,8 @@ export class BotUpdate {
       data: {
         url: text,
         userId: user.id,
+        platform
+        
         // Платформу пока ставим UNKNOWN, ученик сделает парсер в ДЗ
       },
     });

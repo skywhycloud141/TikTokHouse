@@ -6,7 +6,7 @@ import { endWith } from 'rxjs';
 @Injectable()
 export class LinkValidatorService {
     constructor(private prisma:PrismaService){}
-    identifyPlatform(url:string): Platform | 'UNSUPPORTED'{
+    identifyPlatform(url:string): Platform | 'UNKNOWN'{
        let hostname: string;
 
        try {
