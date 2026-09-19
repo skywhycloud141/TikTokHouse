@@ -49,7 +49,7 @@ export class BotUpdate {
     }
     
     const platform = this.linkvalidator.identifyPlatform(text);
-    if (platform === Platform.UNKNOWN) {
+    if (platform === "UNSUPPORTED") {
       await ctx.reply('Извини, я пока не умею скачивать с этого сайта. Поддерживаются: TikTok, Reddit, Instagram.')
       return;
     }
