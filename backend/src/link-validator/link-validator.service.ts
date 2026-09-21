@@ -15,15 +15,12 @@ export class LinkValidatorService {
         return Platform.UNKNOWN
        }
 
-       switch (true) {
-        case hostname === 'tiktok.com' ||
-        hostname.endsWith('.tiktok.com'):
+       switch (hostname) {
+        case 'tiktok.com':
         return Platform.TIKTOK;
-        case hostname === 'reddit.com' ||
-        hostname.endsWith('.reddit.com'):
+        case 'reddit.com':
         return Platform.REDDIT
-        case hostname === 'instagram.com' ||
-        hostname.endsWith('.instagram.com'):
+        case'instagram.com':
         return Platform.INSTAGRAM
 
         default:
