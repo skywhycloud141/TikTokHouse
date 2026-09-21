@@ -5,6 +5,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { BotModule } from './bot/bot.module';
 import { UserModule } from './user/user.module';
 import { LinkValidatorModule } from './link-validator/link-validator.module';
+import { MediaModule } from './media/media.module';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
@@ -20,6 +22,13 @@ import { LinkValidatorModule } from './link-validator/link-validator.module';
     BotModule,
     UserModule,
     LinkValidatorModule,
+    MediaModule,
+    BullModule.forRoot({
+      connection:{
+        host:"localhost",
+        port:6379
+      }
+    })
   ],
 })
 export class AppModule {}

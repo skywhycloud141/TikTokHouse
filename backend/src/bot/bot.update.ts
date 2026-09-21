@@ -4,6 +4,8 @@ import { UserService } from '../user/user.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { LinkValidatorService } from '../link-validator/link-validator.service';
 import { Platform } from '@prisma/client';
+import { MediaService } from '../media/media.service';
+import { waitForDebugger } from 'inspector';
 
 @Update() // Делает этот класс слушателем событий Telegram
 export class BotUpdate {
@@ -11,6 +13,7 @@ export class BotUpdate {
     private readonly userService: UserService,
     private readonly prisma: PrismaService,
     private readonly linkvalidator: LinkValidatorService,
+    private readonly mediaService: MediaService
   ) {}
 
   // Реакция на команду /start
@@ -53,6 +56,9 @@ export class BotUpdate {
       await ctx.reply('Извини, я пока не умею скачивать с этого сайта. Поддерживаются: TikTok, Reddit, Instagram.')
       return;
     }
+    
+    await this.mediaService.addDownloadTask(text, ctx.chat?.id, platform)
+
 
     // Достаем юзера, чтобы привязать историю запроса к нему
     const user = await this.userService.findOrCreateUser(ctx.from);
