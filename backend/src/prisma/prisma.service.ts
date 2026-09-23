@@ -1,6 +1,6 @@
-import "dotenv/config";
+import 'dotenv/config';
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()

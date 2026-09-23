@@ -3,6 +3,6 @@ import { LinkValidatorService } from './link-validator.service';
 
 @Module({
   providers: [LinkValidatorService],
-  exports: [LinkValidatorService]
+  exports: [LinkValidatorService],
 })
 export class LinkValidatorModule {}

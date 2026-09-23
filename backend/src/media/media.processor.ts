@@ -17,14 +17,19 @@ export class MediaProcessor extends WorkerHost {
     const { url, chatId, platform } = job.data;
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       this.logger.log(`Видео скачано: ${url}`);
 
-      await this.bot.telegram.sendMessage(chatId, `✅ Твое видео с ${platform} готово!\n(Здесь будет сам файл)`);
-      
+      await this.bot.telegram.sendMessage(
+        chatId,
+        `✅ Твое видео с ${platform} готово!\n(Здесь будет сам файл)`,
+      );
     } catch (error) {
       this.logger.error(`Ошибка при скачивании: ${error}`);
-      await this.bot.telegram.sendMessage(chatId, '❌ Произошла ошибка при скачивании видео. Попробуй позже.');
+      await this.bot.telegram.sendMessage(
+        chatId,
+        '❌ Произошла ошибка при скачивании видео. Попробуй позже.',
+      );
     }
   }
 }
